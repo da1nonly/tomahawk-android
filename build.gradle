@@ -70,12 +70,12 @@ android {
         versionName '0.76'
         versionCode 760
         multiDexEnabled true
-        ndk {
-            moduleName "libspotifywrapper"
-            stl "stlport_static"
-            ldLibs "log", "OpenSLES"
-            cFlags " -std=c++0x -D__STDC_INT64__"
-        }
+//        ndk {
+//            moduleName "libspotifywrapper"
+//            stl "stlport_static"
+//            ldLibs "log", "OpenSLES"
+//            cFlags " -std=c++0x -D__STDC_INT64__"
+//        }
     }
 
     lintOptions {
@@ -105,8 +105,8 @@ android {
             renderscript.srcDirs = ['src']
             res.srcDirs = ['res']
             assets.srcDirs = ['assets']
-            jniLibs.srcDir 'libs'
-            jni.srcDirs = [] //disable automatic ndk-build call
+          //  jniLibs.srcDir 'libs'
+          //  jni.srcDirs = [] //disable automatic ndk-build call
         }
 
         // Move the tests to tests/java, tests/res, etc...
@@ -148,9 +148,9 @@ android {
         arm {
             versionName getNewVersionName() + "_arm"
             versionCode Integer.parseInt("1" + defaultConfig.versionCode)
-            ndk {
-                abiFilters "armeabi", "armeabi-v7a"
-            }
+//            ndk {
+//                abiFilters "armeabi", "armeabi-v7a"
+//            }
         }
     }
 }
@@ -160,17 +160,17 @@ android {
 ////////////////////////////////////////////////////
 // Make sure the environment variable $ANDROID_NDK_HOME is set:
 // example: ANDROID_NDK_HOME /home/maffen/SDKs/android-ndk-r8e
-task ndkBuild(type: Exec) {
-    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-        commandLine new File((String) System.env.ANDROID_NDK_HOME, 'ndk-build.cmd')
-    } else {
-        commandLine new File((String) System.env.ANDROID_NDK_HOME, 'ndk-build')
-    }
-}
-
-tasks.withType(JavaCompile) {
-    compileTask -> compileTask.dependsOn ndkBuild
-}
+//task ndkBuild(type: Exec) {
+//    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+//        commandLine new File((String) System.env.ANDROID_NDK_HOME, 'ndk-build.cmd')
+//    } else {
+//        commandLine new File((String) System.env.ANDROID_NDK_HOME, 'ndk-build')
+//    }
+//}
+//
+//tasks.withType(JavaCompile) {
+//    compileTask -> compileTask.dependsOn ndkBuild
+//}
 
 /*
  * Include the file "signingconfig.gradle" (which defines the signingConfig), if it exists

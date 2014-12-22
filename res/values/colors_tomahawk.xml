@@ -47,5 +47,6 @@
     <color name="spotify_resolver_bg">#84bd00</color>
     <color name="hatchet_resolver_bg">#3892e3</color>
     <color name="deezer_resolver_bg">#22222c</color>
+    <color name="quranmp3_resolver_bg">#3aad1e</color>
 
 </resources>

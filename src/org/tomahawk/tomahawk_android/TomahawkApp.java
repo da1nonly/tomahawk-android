@@ -62,6 +62,8 @@ public class TomahawkApp extends MultiDexApplication {
 
     public final static String PLUGINNAME_SOUNDCLOUD = "soundcloud";
 
+    public final static String PLUGINNAME_QURANMP3 = "quranmp3";
+
     private static Context sApplicationContext;
 
     @Override
