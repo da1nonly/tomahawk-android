@@ -39,11 +39,11 @@ var HatchetMetadataResolver = Tomahawk.extend(TomahawkResolver, {
     canParseUrl: function (url, type) {
         switch (type) {
             case TomahawkUrlType.Album:
-                return /https?:\/\/(www\.)?hatchet\.is\/music\/[^\/\n]+\/[^\/\n]+/.test(url);
+                return /^https?:\/\/(www\.)?hatchet\.is\/music\/[^\/\n]+\/[^\/\n]+$/.test(url);
             case TomahawkUrlType.Artist:
-                return /https?:\/\/(www\.)?hatchet\.is\/music\/[^\/\n]+/.test(url);
+                return /^https?:\/\/(www\.)?hatchet\.is\/music\/[^\/\n][^\/\n_]+$/.test(url);
             case TomahawkUrlType.Track:
-                return /https?:\/\/(www\.)?hatchet\.is\/music\/[^\/\n]+\/_\/[^\/\n]+/.test(url)
+                return /^https?:\/\/(www\.)?hatchet\.is\/music\/[^\/\n]+\/_\/[^\/\n]+$/.test(url);
             default:
                 return false;
         }
@@ -82,4 +82,3 @@ var HatchetMetadataResolver = Tomahawk.extend(TomahawkResolver, {
 });
 
 Tomahawk.resolver.instance = HatchetMetadataResolver;
-

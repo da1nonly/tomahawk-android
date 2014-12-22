@@ -31,7 +31,6 @@ import org.tomahawk.tomahawk_android.activities.TomahawkMainActivity;
 import org.tomahawk.tomahawk_android.adapters.Segment;
 import org.tomahawk.tomahawk_android.adapters.TomahawkListAdapter;
 import org.tomahawk.tomahawk_android.services.PlaybackService;
-import org.tomahawk.tomahawk_android.utils.TomahawkListItem;
 import org.tomahawk.tomahawk_android.views.FancyDropDown;
 
 import android.content.BroadcastReceiver;
@@ -109,10 +108,10 @@ public class TracksFragment extends TomahawkFragment {
      * Called every time an item inside a ListView or GridView is clicked
      *
      * @param view the clicked view
-     * @param item the TomahawkListItem which corresponds to the click
+     * @param item the Object which corresponds to the click
      */
     @Override
-    public void onItemClick(View view, TomahawkListItem item) {
+    public void onItemClick(View view, Object item) {
         if (item instanceof Query) {
             Query query = (Query) item;
             if (query.isPlayable()) {
@@ -162,7 +161,7 @@ public class TracksFragment extends TomahawkFragment {
 
         mResolveQueriesHandler.removeCallbacksAndMessages(null);
         mResolveQueriesHandler.sendEmptyMessage(RESOLVE_QUERIES_REPORTER_MSG);
-        ArrayList<TomahawkListItem> queries = new ArrayList<TomahawkListItem>();
+        ArrayList queries = new ArrayList();
         TomahawkListAdapter tomahawkListAdapter;
         TomahawkMainActivity activity = (TomahawkMainActivity) getActivity();
         LayoutInflater layoutInflater = getActivity().getLayoutInflater();
@@ -177,13 +176,11 @@ public class TracksFragment extends TomahawkFragment {
                     tomahawkListAdapter.setShowDuration(true);
                 }
                 tomahawkListAdapter.setShowNumeration(true);
-                tomahawkListAdapter.setShowContentHeaderSpacerResId(
-                        R.dimen.header_clear_space_scrollable, getListView());
                 setListAdapter(tomahawkListAdapter);
             } else {
                 getListAdapter().setSegments(segment, getListView());
             }
-            showContentHeader(mAlbum, R.dimen.header_clear_space_nonscrollable);
+            showContentHeader(mAlbum);
             showAlbumFancyDropDown();
         } else if (mQuery != null) {
             queries.add(mQuery);
@@ -192,13 +189,11 @@ public class TracksFragment extends TomahawkFragment {
                 tomahawkListAdapter = new TomahawkListAdapter(activity, layoutInflater, segment,
                         this);
                 tomahawkListAdapter.setShowDuration(true);
-                tomahawkListAdapter.setShowContentHeaderSpacerResId(
-                        R.dimen.header_clear_space_scrollable, getListView());
                 setListAdapter(tomahawkListAdapter);
             } else {
                 getListAdapter().setSegments(segment, getListView());
             }
-            showContentHeader(mQuery, R.dimen.header_clear_space_nonscrollable);
+            showContentHeader(mQuery);
             showFancyDropDown(mQuery);
         } else if (mSearchSongs != null) {
             queries.addAll(mSearchSongs);
@@ -264,12 +259,11 @@ public class TracksFragment extends TomahawkFragment {
         }
 
         mShownQueries.clear();
-        for (TomahawkListItem query : queries) {
+        for (Object query : queries) {
             mShownQueries.add((Query) query);
         }
 
-        updateShowPlaystate();
-        forceAutoResolve();
+        onUpdateAdapterFinished();
     }
 
     private void showAlbumFancyDropDown() {

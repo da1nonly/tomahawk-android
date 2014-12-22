@@ -44,8 +44,8 @@ import java.util.ArrayList;
 import java.util.Map;
 
 /**
- * A {@link android.support.v4.app.DialogFragment} which shows checkboxes and edittexts depending
- * on the given ScriptResolver's config. Enables the user to configure a certain ScriptResolver.
+ * A {@link android.support.v4.app.DialogFragment} which shows checkboxes and edittexts depending on
+ * the given ScriptResolver's config. Enables the user to configure a certain ScriptResolver.
  */
 public class ResolverConfigDialog extends ConfigDialog {
 
@@ -78,6 +78,12 @@ public class ResolverConfigDialog extends ConfigDialog {
         EditText showKeyboardEditText = null;
         EditText lastEditText = null;
         if (mScriptResolver.getConfigUi() != null && mScriptResolver.getConfigUi().fields != null) {
+            LinearLayout headerTextLayout = (LinearLayout) inflater
+                    .inflate(R.layout.config_textview, null);
+            TextView headerTextView = (TextView) headerTextLayout
+                    .findViewById(R.id.config_textview);
+            headerTextView.setText(mScriptResolver.getDescription());
+            addScrollingViewToFrame(headerTextLayout);
             for (ScriptResolverConfigUiField field : mScriptResolver.getConfigUi().fields) {
                 Map<String, Object> config = mScriptResolver.getConfig();
                 if (PROPERTY_CHECKED.equals(field.property)) {
@@ -96,7 +102,7 @@ public class ResolverConfigDialog extends ConfigDialog {
                     addScrollingViewToFrame(checkboxLayout);
                 } else if (PROPERTY_TEXT.equals(field.property)) {
                     LinearLayout textLayout = (LinearLayout) inflater
-                            .inflate(R.layout.config_text, null);
+                            .inflate(R.layout.config_edittext, null);
                     ConfigEdittext editText = (ConfigEdittext) textLayout
                             .findViewById(R.id.config_edittext);
                     editText.mFieldName = field.name;
@@ -143,17 +149,11 @@ public class ResolverConfigDialog extends ConfigDialog {
             showSoftKeyboard(showKeyboardEditText);
         }
         setDialogTitle(mScriptResolver.getName());
-        if (mScriptResolver.isConfigTestable()) {
-            hideEnabledCheckbox();
-        } else {
-            setEnabledCheckboxState(mScriptResolver.isEnabled());
+        if (!mScriptResolver.isConfigTestable()) {
+            setConnectImageViewClickable();
         }
 
-        if (mScriptResolver.getIconPath() != null) {
-            setStatusImage(mScriptResolver.getIconPath(), mScriptResolver.isEnabled());
-        } else {
-            setStatusImage(mScriptResolver.getIconResId(), mScriptResolver.isEnabled());
-        }
+        setStatus(mScriptResolver);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(getDialogView());
         return builder.create();
@@ -178,11 +178,7 @@ public class ResolverConfigDialog extends ConfigDialog {
         if (mScriptResolver.isEnabled() != checked) {
             mScriptResolver.setEnabled(checked);
 
-            if (mScriptResolver.getIconPath() != null) {
-                setStatusImage(mScriptResolver.getIconPath(), mScriptResolver.isEnabled());
-            } else {
-                setStatusImage(mScriptResolver.getIconResId(), mScriptResolver.isEnabled());
-            }
+            setStatus(mScriptResolver);
         }
     }
 
@@ -195,7 +191,7 @@ public class ResolverConfigDialog extends ConfigDialog {
             } else {
                 mScriptResolver.setEnabled(false);
             }
-            stopLoadingAnimation(false);
+            stopLoadingAnimation();
         }
     }
 

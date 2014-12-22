@@ -21,6 +21,10 @@ package org.tomahawk.tomahawk_android.fragments;
 import org.tomahawk.tomahawk_android.R;
 import org.tomahawk.tomahawk_android.TomahawkApp;
 import org.tomahawk.tomahawk_android.adapters.StickyBaseAdapter;
+import org.tomahawk.tomahawk_android.adapters.TomahawkListAdapter;
+import org.tomahawk.tomahawk_android.events.AnimatePagerEvent;
+import org.tomahawk.tomahawk_android.events.PerformSyncEvent;
+import org.tomahawk.tomahawk_android.events.RequestSyncEvent;
 import org.tomahawk.tomahawk_android.utils.TomahawkListItem;
 import org.tomahawk.tomahawk_android.views.FancyDropDown;
 
@@ -37,6 +41,7 @@ import android.widget.FrameLayout;
 
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 /**
@@ -47,6 +52,9 @@ public abstract class TomahawkListFragment extends ContentHeaderFragment impleme
 
     public static final String TOMAHAWK_LIST_SCROLL_POSITION
             = "org.tomahawk.tomahawk_android.tomahawk_list_scroll_position";
+
+    public static final String CONTAINER_FRAGMENT_CLASSNAME
+            = "org.tomahawk.tomahawk_android.container_fragment_classname";
 
     private StickyBaseAdapter mStickyBaseAdapter;
 
@@ -64,6 +72,8 @@ public abstract class TomahawkListFragment extends ContentHeaderFragment impleme
         }
     };
 
+    protected Class mContainerFragmentClass;
+
     /**
      * Get a stored list scroll position, if present
      */
@@ -77,6 +87,23 @@ public abstract class TomahawkListFragment extends ContentHeaderFragment impleme
                         TOMAHAWK_LIST_SCROLL_POSITION);
             }
         }
+
+        if (getArguments() != null) {
+            if (getArguments().containsKey(CONTAINER_FRAGMENT_CLASSNAME)) {
+                String fragmentName = getArguments().getString(CONTAINER_FRAGMENT_CLASSNAME);
+                if (fragmentName.equals(ArtistPagerFragment.class.getName())) {
+                    mContainerFragmentClass = ArtistPagerFragment.class;
+                } else if (fragmentName.equals(SearchPagerFragment.class.getName())) {
+                    mContainerFragmentClass = SearchPagerFragment.class;
+                } else if (fragmentName.equals(UserPagerFragment.class.getName())) {
+                    mContainerFragmentClass = UserPagerFragment.class;
+                } else if (fragmentName.equals(CollectionPagerFragment.class.getName())) {
+                    mContainerFragmentClass = CollectionPagerFragment.class;
+                }
+            }
+        }
+
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -92,6 +119,9 @@ public abstract class TomahawkListFragment extends ContentHeaderFragment impleme
         if (getListView() != null) {
             getListView().setOnScrollListener(this);
             getListView().setAreHeadersSticky(getResources().getBoolean(R.bool.set_headers_sticky));
+            if (mContainerFragmentPage > -1) {
+                getListView().setTag(mContainerFragmentPage);
+            }
         }
     }
 
@@ -127,12 +157,52 @@ public abstract class TomahawkListFragment extends ContentHeaderFragment impleme
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount,
             int totalItemCount) {
-        if (firstVisibleItem == 0 && getListView().getListChildAt(0) != null) {
+        updateAnimation();
+    }
+
+    private void updateAnimation() {
+        int playTime;
+        if (getListView().getFirstVisiblePosition() == 0
+                && getListView().getListChildAt(0) != null) {
             float delta = getListView().getListChildAt(0).getBottom() - getListView().getTop();
-            animateContentHeader(
-                    (int) (10000f - delta / getListView().getListChildAt(0).getHeight() * 10000f));
+            playTime = (int)
+                    (10000f - delta / getListView().getListChildAt(0).getHeight() * 10000f);
         } else {
-            animateContentHeader(10000);
+            playTime = 10000;
+        }
+        if (mContainerFragmentId >= 0) {
+            AnimatePagerEvent event = new AnimatePagerEvent();
+            event.mContainerFragmentId = mContainerFragmentId;
+            event.mContainerFragmentPage = mContainerFragmentPage;
+            event.mPlayTime = playTime;
+            EventBus.getDefault().post(event);
+        } else {
+            animate(playTime);
+        }
+    }
+
+    @SuppressWarnings("unused")
+    public void onEvent(RequestSyncEvent event) {
+        if (mContainerFragmentId == event.mContainerFragmentId
+                && mContainerFragmentPage == event.mPerformerFragmentPage) {
+            PerformSyncEvent performSyncEvent = new PerformSyncEvent();
+            performSyncEvent.mContainerFragmentId = event.mContainerFragmentId;
+            performSyncEvent.mContainerFragmentPage = event.mReceiverFragmentPage;
+            performSyncEvent.mFirstVisiblePosition = getListView().getFirstVisiblePosition();
+            performSyncEvent.mTop = getListView().getListChildAt(0).getTop();
+            EventBus.getDefault().post(performSyncEvent);
+        }
+    }
+
+    @SuppressWarnings("unused")
+    public void onEvent(PerformSyncEvent event) {
+        if (mContainerFragmentId == event.mContainerFragmentId
+                && mContainerFragmentPage == event.mContainerFragmentPage) {
+            if (event.mFirstVisiblePosition == 0) {
+                getListView().setSelectionFromTop(0, event.mTop);
+            } else if (getListView().getFirstVisiblePosition() == 0) {
+                getListView().setSelection(1);
+            }
         }
     }
 
@@ -149,52 +219,33 @@ public abstract class TomahawkListFragment extends ContentHeaderFragment impleme
                 dropDownListener);
     }
 
-    protected void showContentHeader(Object item, int headerHeightResid) {
-        super.showContentHeader(
-                (FrameLayout) getView().findViewById(R.id.content_header_image_frame),
-                (FrameLayout) getView().findViewById(R.id.content_header_frame),
-                getView().findViewById(R.id.action_bar_background_gradient), item,
-                true, headerHeightResid, null);
-
-        //Add a spacer to the top of the listview
-        FrameLayout listFrame = (FrameLayout) getView().findViewById(
-                R.id.fragmentLayout_listLayout_frameLayout);
-        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) listFrame.getLayoutParams();
-        int offset = getResources().getDimensionPixelSize(headerHeightResid);
-        params.setMargins(0, offset, 0, 0);
-        listFrame.setLayoutParams(params);
-    }
-
-    protected void showContentHeader(int drawableResid, int headerHeightResid) {
-        super.showContentHeader(
-                (FrameLayout) getView().findViewById(R.id.content_header_image_frame),
-                (FrameLayout) getView().findViewById(R.id.content_header_frame),
-                getView().findViewById(R.id.action_bar_background_gradient), drawableResid,
-                false, headerHeightResid, null);
-
-        //Add a spacer to the top of the listview
-        FrameLayout listFrame = (FrameLayout) getView().findViewById(
-                R.id.fragmentLayout_listLayout_frameLayout);
-        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) listFrame.getLayoutParams();
-        int actionBarHeight = getResources().getDimensionPixelSize(
-                R.dimen.abc_action_bar_default_height_material);
-        params.setMargins(0, actionBarHeight, 0, 0);
-        listFrame.setLayoutParams(params);
-    }
-
-    protected void setActionBarOffset() {
-        FrameLayout listFrame =
-                (FrameLayout) getView().findViewById(R.id.fragmentLayout_listLayout_frameLayout);
-        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) listFrame.getLayoutParams();
-        int actionBarHeight = getResources().getDimensionPixelSize(
-                R.dimen.abc_action_bar_default_height_material);
-        params.setMargins(0, actionBarHeight, 0, 0);
-        listFrame.setLayoutParams(params);
-
-        View actionBarBg = getView().findViewById(R.id.action_bar_background);
-        if (actionBarBg != null) {
-            actionBarBg.setVisibility(View.VISIBLE);
+    protected void showContentHeader(Object item) {
+        if (mContainerFragmentClass == null) {
+            FrameLayout headerImageFrame =
+                    (FrameLayout) getView().findViewById(R.id.content_header_image_frame);
+            FrameLayout headerFrame =
+                    (FrameLayout) getView().findViewById(R.id.content_header_frame);
+            super.showContentHeader(headerImageFrame, headerFrame, item);
         }
+    }
+
+    protected void setupAnimations() {
+        if (mContainerFragmentClass == null) {
+            FrameLayout headerImageFrame =
+                    (FrameLayout) getView().findViewById(R.id.content_header_image_frame);
+            FrameLayout headerFrame =
+                    (FrameLayout) getView().findViewById(R.id.content_header_frame);
+            super.setupAnimations(headerImageFrame, headerFrame);
+        }
+    }
+
+    protected void setupNonScrollableSpacer() {
+        setupNonScrollableSpacer(
+                getView().findViewById(R.id.fragmentLayout_listLayout_frameLayout));
+    }
+
+    protected void setupScrollableSpacer() {
+        setupScrollableSpacer((TomahawkListAdapter) getListAdapter(), getListView());
     }
 
     /**

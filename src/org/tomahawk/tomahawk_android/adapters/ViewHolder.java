@@ -33,11 +33,11 @@ import org.tomahawk.tomahawk_android.views.FancyDropDown;
 import org.tomahawk.tomahawk_android.views.PlaybackSeekBar;
 
 import android.content.res.Resources;
+import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -62,6 +62,8 @@ public class ViewHolder {
 
     ImageView mImageView4;
 
+    View mConnectImageViewContainer;
+
     CheckBox mCheckBox1;
 
     CheckBox mCheckBox2;
@@ -69,8 +71,6 @@ public class ViewHolder {
     Spinner mSpinner1;
 
     FancyDropDown mFancyDropDown;
-
-    LinearLayout mTextViewContainer;
 
     TextView mTextView1;
 
@@ -191,6 +191,15 @@ public class ViewHolder {
                     .findViewById(R.id.textview2);
             mTextView3 = (TextView) rootView
                     .findViewById(R.id.textview3);
+        } else if (layoutId == R.layout.grid_item_resolver) {
+            mImageView1 = (ImageView) rootView
+                    .findViewById(R.id.imageview1);
+            mImageView2 = (ImageView) rootView
+                    .findViewById(R.id.imageview2);
+            mConnectImageViewContainer = rootView
+                    .findViewById(R.id.connect_imageview_container);
+            mTextView1 = (TextView) rootView
+                    .findViewById(R.id.textview1);
         }
         if (mMainClickArea == null) {
             mMainClickArea = rootView;
@@ -299,13 +308,13 @@ public class ViewHolder {
         mTextView1.setText(user.getName().toUpperCase());
         if (showFollowing) {
             mFollowButton
-                    .setBackgroundResource(R.drawable.selectable_background_button_follow_filled);
+                    .setBackgroundResource(R.drawable.selectable_background_button_green_filled);
             mFollowButton.setOnClickListener(followButtonListener);
             mFollowButtonTextView.setText(TomahawkApp.getContext().getString(
                     R.string.content_header_following).toUpperCase());
         } else if (showNotFollowing) {
             mFollowButton
-                    .setBackgroundResource(R.drawable.selectable_background_button_follow);
+                    .setBackgroundResource(R.drawable.selectable_background_button_green);
             mFollowButton.setOnClickListener(followButtonListener);
             mFollowButtonTextView.setText(TomahawkApp.getContext().getString(
                     R.string.content_header_follow).toUpperCase());
@@ -314,11 +323,12 @@ public class ViewHolder {
         }
     }
 
-    public void fillContentHeader(Query query) {
+    public void fillContentHeader(Query query, View.OnClickListener moreButtonListener) {
         mImageView1.setVisibility(View.VISIBLE);
-        TomahawkUtils
-                .loadImageIntoImageView(TomahawkApp.getContext(), mImageView1, query.getImage(),
-                        Image.getLargeImageSize(), query.hasArtistImage());
+        TomahawkUtils.loadImageIntoImageView(TomahawkApp.getContext(), mImageView1,
+                query.getImage(), Image.getLargeImageSize(), query.hasArtistImage());
+        mMoreButton.setVisibility(View.VISIBLE);
+        mMoreButton.setOnClickListener(moreButtonListener);
     }
 
     public void fillContentHeader(Image image) {
@@ -328,6 +338,10 @@ public class ViewHolder {
 
     public void fillContentHeader(Integer integer) {
         TomahawkUtils.loadDrawableIntoImageView(TomahawkApp.getContext(), mImageView1, integer);
+    }
+
+    public void fillContentHeader(ColorDrawable drawable) {
+        mImageView1.setImageDrawable(drawable);
     }
 
     public void fillView(final TomahawkMainActivity activity, Query query,
@@ -344,13 +358,7 @@ public class ViewHolder {
             if (showAsPlaying) {
                 mImageView1.setVisibility(View.VISIBLE);
                 Resolver resolver = query.getPreferredTrackResult().getResolvedBy();
-                if (resolver.getIconPath() != null) {
-                    TomahawkUtils.loadDrawableIntoImageView(TomahawkApp.getContext(),
-                            mImageView1, resolver.getIconPath(), false);
-                } else {
-                    TomahawkUtils.loadDrawableIntoImageView(TomahawkApp.getContext(),
-                            mImageView1, resolver.getIconResId(), false);
-                }
+                resolver.loadIcon(mImageView1, false);
             } else {
                 mTextView1.setVisibility(View.VISIBLE);
                 mTextView1.setText(numerationString);
@@ -400,6 +408,18 @@ public class ViewHolder {
             String songs = TomahawkApp.getContext().getResources().getString(R.string.songs);
             mTextView3.setVisibility(View.VISIBLE);
             mTextView3.setText(songCount + " " + songs);
+        }
+    }
+
+    public void fillView(Resolver resolver) {
+        mTextView1.setText(resolver.getPrettyName());
+        mImageView1.clearColorFilter();
+        resolver.loadIconBackground(mImageView1, !resolver.isEnabled());
+        resolver.loadIconWhite(mImageView2);
+        if (resolver.isEnabled()) {
+            mConnectImageViewContainer.setVisibility(View.VISIBLE);
+        } else {
+            mConnectImageViewContainer.setVisibility(View.GONE);
         }
     }
 

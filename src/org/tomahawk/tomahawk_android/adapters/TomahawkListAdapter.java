@@ -27,6 +27,7 @@ import org.tomahawk.libtomahawk.infosystem.SocialAction;
 import org.tomahawk.libtomahawk.infosystem.User;
 import org.tomahawk.libtomahawk.infosystem.hatchet.HatchetInfoPlugin;
 import org.tomahawk.libtomahawk.resolver.Query;
+import org.tomahawk.libtomahawk.resolver.Resolver;
 import org.tomahawk.libtomahawk.utils.TomahawkUtils;
 import org.tomahawk.tomahawk_android.R;
 import org.tomahawk.tomahawk_android.TomahawkApp;
@@ -55,7 +56,7 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 /**
  * This class is used to populate a {@link se.emilsjolander.stickylistheaders.StickyListHeadersListView}.
  */
-public class TomahawkListAdapter extends StickyBaseAdapter implements ContentHeaderAdapter {
+public class TomahawkListAdapter extends StickyBaseAdapter {
 
     private TomahawkMainActivity mActivity;
 
@@ -153,13 +154,6 @@ public class TomahawkListAdapter extends StickyBaseAdapter implements ContentHea
         ArrayList<Segment> segments = new ArrayList<Segment>();
         segments.add(segment);
         setSegments(segments, listView);
-    }
-
-    public void setShowContentHeaderSpacerResId(int headerSpacerHeightResId,
-            StickyListHeadersListView listView) {
-        mHeaderSpacerHeight = TomahawkApp.getContext().getResources()
-                .getDimensionPixelSize(headerSpacerHeightResId);
-        updateFooterSpacerHeight(listView);
     }
 
     public void setShowContentHeaderSpacer(int headerSpacerHeight,
@@ -305,7 +299,8 @@ public class TomahawkListAdapter extends StickyBaseAdapter implements ContentHea
                 || viewType == R.layout.grid_item
                 || viewType == R.layout.list_item_artistalbum
                 || viewType == R.layout.grid_item_user
-                || viewType == R.layout.list_item_user) {
+                || viewType == R.layout.list_item_user
+                || viewType == R.layout.grid_item_resolver) {
             for (ViewHolder viewHolder : viewHolders) {
                 if (viewType == R.layout.list_item_track
                         || viewType == R.layout.list_item_track_highlighted) {
@@ -313,6 +308,8 @@ public class TomahawkListAdapter extends StickyBaseAdapter implements ContentHea
                     viewHolder.mTextView1.setVisibility(View.GONE);
                     viewHolder.mTextView3.setVisibility(View.GONE);
                     viewHolder.mTextView4.setVisibility(View.GONE);
+                } else if (viewType == R.layout.grid_item_resolver) {
+                    viewHolder.mImageView1.clearColorFilter();
                 } else {
                     viewHolder.mTextView2.setVisibility(View.GONE);
                     viewHolder.mTextView3.setVisibility(View.GONE);
@@ -324,8 +321,7 @@ public class TomahawkListAdapter extends StickyBaseAdapter implements ContentHea
         // components with the correct data
         for (int i = 0; i < viewHolders.size(); i++) {
             ViewHolder viewHolder = viewHolders.get(i);
-            TomahawkListItem item = o instanceof List ? (TomahawkListItem) ((List) o).get(i)
-                    : (TomahawkListItem) o;
+            Object item = o instanceof List ? ((List) o).get(i) : o;
             // Don't display the socialAction item directly, but rather the item that is its target
             if (item instanceof SocialAction && ((SocialAction) item).getTargetObject() != null) {
                 item = ((SocialAction) item).getTargetObject();
@@ -343,13 +339,15 @@ public class TomahawkListAdapter extends StickyBaseAdapter implements ContentHea
                 } else if (item instanceof Artist) {
                     viewHolder.fillView((Artist) item);
                 }
+            } else if (viewHolder.mLayoutId == R.layout.grid_item_resolver) {
+                viewHolder.fillView((Resolver) item);
             } else if (viewHolder.mLayoutId == R.layout.grid_item_user
                     || viewHolder.mLayoutId == R.layout.list_item_user) {
                 viewHolder.fillView((User) item);
             } else if (viewHolder.mLayoutId == R.layout.single_line_list_item) {
-                viewHolder.fillView(item.getName());
+                viewHolder.fillView(((TomahawkListItem) item).getName());
             } else if (viewHolder.mLayoutId == R.layout.list_item_text) {
-                viewHolder.fillView(item.getName());
+                viewHolder.fillView(((TomahawkListItem) item).getName());
             } else if (viewHolder.mLayoutId == R.layout.list_item_track
                     || viewHolder.mLayoutId == R.layout.list_item_track_highlighted) {
                 if (item instanceof Query || item instanceof PlaylistEntry) {
@@ -543,7 +541,7 @@ public class TomahawkListAdapter extends StickyBaseAdapter implements ContentHea
                                         segment.segmentSize())
                                 : resources.getString(
                                         R.string.socialaction_type_collected_album_single);
-                    }else if (targetObject instanceof Artist) {
+                    } else if (targetObject instanceof Artist) {
                         phrase = segment.segmentSize() > 1 ?
                                 resources.getString(
                                         R.string.socialaction_type_collected_artist_multiple,
@@ -606,6 +604,8 @@ public class TomahawkListAdapter extends StickyBaseAdapter implements ContentHea
                 }
                 if (firstItem instanceof User) {
                     return R.layout.grid_item_user;
+                } else if (firstItem instanceof Resolver) {
+                    return R.layout.grid_item_resolver;
                 } else {
                     return R.layout.grid_item;
                 }

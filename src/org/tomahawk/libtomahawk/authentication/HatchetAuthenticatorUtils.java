@@ -187,6 +187,12 @@ public class HatchetAuthenticatorUtils extends AuthenticatorUtils {
     }
 
     @Override
+    public String getDescription() {
+        return TomahawkApp.getContext().getString(R.string.preferences_hatchet_text,
+                HATCHET_PRETTY_NAME);
+    }
+
+    @Override
     public int getIconResourceId() {
         return R.drawable.ic_hatchet;
     }
@@ -258,7 +264,7 @@ public class HatchetAuthenticatorUtils extends AuthenticatorUtils {
                             Log.d(TAG, "login: " + e.getClass() + ": " + e.getLocalizedMessage());
                             HatchetAuthResponse authResponse =
                                     (HatchetAuthResponse) e.getBodyAs(HatchetAuthResponse.class);
-                            if (authResponse.error != null &&
+                            if (authResponse != null && authResponse.error != null &&
                                     authResponse.error.equals(RESPONSE_ERROR_INVALID_REQUEST)) {
                                 onLoginFailed(
                                         AuthenticatorManager.CONFIG_TEST_RESULT_TYPE_INVALIDCREDS,

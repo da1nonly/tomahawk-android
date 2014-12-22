@@ -17,10 +17,15 @@
  */
 package org.tomahawk.libtomahawk.resolver;
 
+import android.widget.ImageView;
+
 /**
  * The basic {@link Resolver} interface, which is implemented by every type of {@link Resolver}
  */
 public abstract class Resolver {
+
+    public static final String ENABLED_STATE_CHANGED
+            = "org.tomahawk.tomahawk_android.enabled_state_changed";
 
     public interface OnResolverReadyListener {
 
@@ -56,9 +61,19 @@ public abstract class Resolver {
     public abstract boolean isResolving();
 
     /**
-     * @return the path to the icon of this {@link Resolver}
+     * Load this resolver's icon into the given ImageView
      */
-    public abstract String getIconPath();
+    public abstract void loadIcon(ImageView imageView, boolean grayOut);
+
+    /**
+     * Load this resolver's white icon into the given ImageView
+     */
+    public abstract void loadIconWhite(ImageView imageView);
+
+    /**
+     * Load this resolver's icon background into the given ImageView
+     */
+    public abstract void loadIconBackground(ImageView imageView, boolean grayOut);
 
     /**
      * @return the pretty name of this resolver
@@ -71,11 +86,6 @@ public abstract class Resolver {
      * @return the name of this resolver's collection
      */
     public abstract String getCollectionName();
-
-    /**
-     * @return the resource id of the icon of this {@link Resolver}
-     */
-    public abstract int getIconResId();
 
     /**
      * Resolve the given {@link Query}

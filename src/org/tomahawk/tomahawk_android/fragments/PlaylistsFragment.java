@@ -30,7 +30,6 @@ import org.tomahawk.tomahawk_android.adapters.Segment;
 import org.tomahawk.tomahawk_android.adapters.TomahawkListAdapter;
 import org.tomahawk.tomahawk_android.dialogs.CreatePlaylistDialog;
 import org.tomahawk.tomahawk_android.utils.FragmentUtils;
-import org.tomahawk.tomahawk_android.utils.TomahawkListItem;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -83,10 +82,6 @@ public class PlaylistsFragment extends TomahawkFragment {
         if (mContainerFragmentClass == null) {
             getActivity().setTitle(getString(R.string.drawer_title_playlists).toUpperCase());
         }
-        if (!mDontShowHeader) {
-            showContentHeader(R.drawable.playlists_header,
-                    R.dimen.header_clear_space_nonscrollable_static);
-        }
         updateAdapter();
     }
 
@@ -104,19 +99,20 @@ public class PlaylistsFragment extends TomahawkFragment {
      * Called every time an item inside a ListView or GridView is clicked
      *
      * @param view the clicked view
-     * @param item the TomahawkListItem which corresponds to the click
+     * @param item the Object which corresponds to the click
      */
     @Override
-    public void onItemClick(View view, TomahawkListItem item) {
+    public void onItemClick(View view, Object item) {
         if (item instanceof Playlist) {
             Bundle bundle = new Bundle();
             bundle.putString(TomahawkFragment.TOMAHAWK_PLAYLIST_KEY, ((Playlist) item).getId());
             if (mUser != null) {
                 bundle.putString(TomahawkFragment.TOMAHAWK_USER_ID, mUser.getId());
             }
+            bundle.putInt(ContentHeaderFragment.MODE,
+                    ContentHeaderFragment.MODE_HEADER_DYNAMIC);
             FragmentUtils.replace((TomahawkMainActivity) getActivity(),
-                    getActivity().getSupportFragmentManager(), PlaylistEntriesFragment.class,
-                    bundle);
+                    PlaylistEntriesFragment.class, bundle);
         } else {
             new CreatePlaylistDialog().show(getFragmentManager(),
                     getString(R.string.create_playlist));
@@ -134,7 +130,7 @@ public class PlaylistsFragment extends TomahawkFragment {
 
         LayoutInflater layoutInflater = getActivity().getLayoutInflater();
 
-        List<TomahawkListItem> playlists = new ArrayList<TomahawkListItem>();
+        List playlists = new ArrayList();
         HatchetAuthenticatorUtils authenticatorUtils
                 = (HatchetAuthenticatorUtils) AuthenticatorManager.getInstance()
                 .getAuthenticatorUtils(TomahawkApp.PLUGINNAME_HATCHET);
@@ -154,18 +150,12 @@ public class PlaylistsFragment extends TomahawkFragment {
         if (getListAdapter() == null) {
             TomahawkListAdapter tomahawkListAdapter = new TomahawkListAdapter(
                     (TomahawkMainActivity) getActivity(), layoutInflater, segment, this);
-            if (!mDontShowHeader) {
-                int actionBarHeight = getResources().getDimensionPixelSize(
-                        R.dimen.abc_action_bar_default_height_material);
-                int headerHeight = getResources().getDimensionPixelSize(
-                        R.dimen.header_clear_space_nonscrollable_static);
-                tomahawkListAdapter.setShowContentHeaderSpacer(headerHeight - actionBarHeight,
-                        getListView());
-            }
             setListAdapter(tomahawkListAdapter);
         } else {
             getListAdapter().setSegments(segment, getListView());
         }
-        forceAutoResolve();
+        showContentHeader(R.drawable.playlists_header);
+
+        onUpdateAdapterFinished();
     }
 }

@@ -20,7 +20,13 @@ package org.tomahawk.tomahawk_android.dialogs;
 import org.tomahawk.libtomahawk.authentication.AuthenticatorManager;
 import org.tomahawk.libtomahawk.authentication.AuthenticatorUtils;
 import org.tomahawk.libtomahawk.authentication.HatchetAuthenticatorUtils;
+<<<<<<< HEAD
+=======
+import org.tomahawk.libtomahawk.resolver.HatchetStubResolver;
+import org.tomahawk.libtomahawk.resolver.PipeLine;
+>>>>>>> c0156f1bb5707f858c9a6d0484b770841453ba54
 import org.tomahawk.tomahawk_android.R;
+import org.tomahawk.tomahawk_android.TomahawkApp;
 import org.tomahawk.tomahawk_android.fragments.TomahawkFragment;
 import org.tomahawk.tomahawk_android.ui.widgets.ConfigEdittext;
 
@@ -88,12 +94,19 @@ public class LoginConfigDialog extends ConfigDialog {
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         boolean isLoggedIn = mAuthenticatorUtils.isLoggedIn();
-        LinearLayout usernameLayout = (LinearLayout) inflater.inflate(R.layout.config_text, null);
+        LinearLayout headerTextLayout =
+                (LinearLayout) inflater.inflate(R.layout.config_textview, null);
+        TextView headerTextView = (TextView) headerTextLayout.findViewById(R.id.config_textview);
+        headerTextView.setText(mAuthenticatorUtils.getDescription());
+        addScrollingViewToFrame(headerTextLayout);
+        LinearLayout usernameLayout =
+                (LinearLayout) inflater.inflate(R.layout.config_edittext, null);
         mUsernameEditText = (ConfigEdittext) usernameLayout.findViewById(R.id.config_edittext);
         mUsernameEditText.setHint(mAuthenticatorUtils.getUserIdEditTextHintResId());
         mUsernameEditText.setText(isLoggedIn ? mAuthenticatorUtils.getUserName() : "");
         addScrollingViewToFrame(usernameLayout);
-        LinearLayout passwordLayout = (LinearLayout) inflater.inflate(R.layout.config_text, null);
+        LinearLayout passwordLayout =
+                (LinearLayout) inflater.inflate(R.layout.config_edittext, null);
         mPasswordEditText = (ConfigEdittext) passwordLayout.findViewById(R.id.config_edittext);
         mPasswordEditText.setHint(R.string.login_password);
         mPasswordEditText.setTypeface(Typeface.DEFAULT);
@@ -104,8 +117,8 @@ public class LoginConfigDialog extends ConfigDialog {
         if (mAuthenticatorUtils.doesAllowRegistration() && !mAuthenticatorUtils.isLoggedIn()) {
             FrameLayout buttonLayout =
                     (FrameLayout) inflater.inflate(R.layout.config_button, null);
-            LinearLayout button =
-                    (LinearLayout) buttonLayout.findViewById(R.id.config_button);
+            FrameLayout button =
+                    (FrameLayout) buttonLayout.findViewById(R.id.config_button);
             button.setOnClickListener(new RegisterButtonListener());
             TextView buttonText =
                     (TextView) buttonLayout.findViewById(R.id.config_button_text);
@@ -115,9 +128,13 @@ public class LoginConfigDialog extends ConfigDialog {
 
         showSoftKeyboard(mUsernameEditText);
 
-        hideEnabledCheckbox();
         setDialogTitle(mAuthenticatorUtils.getPrettyName() + ": " + getString(R.string.login));
-        setStatusImage(mAuthenticatorUtils.getIconResourceId(), isLoggedIn);
+        if (TomahawkApp.PLUGINNAME_HATCHET.equals(mAuthenticatorUtils.getId())) {
+            setStatus(
+                    new HatchetStubResolver(HatchetAuthenticatorUtils.HATCHET_PRETTY_NAME, null));
+        } else {
+            setStatus(PipeLine.getInstance().getResolver(mAuthenticatorUtils.getId()));
+        }
         updateButtonTexts(isLoggedIn);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(getDialogView());
@@ -137,7 +154,7 @@ public class LoginConfigDialog extends ConfigDialog {
             } else if (type == AuthenticatorManager.CONFIG_TEST_RESULT_TYPE_LOGOUT) {
                 updateButtonTexts(false);
             }
-            stopLoadingAnimation(false);
+            stopLoadingAnimation();
         }
     }
 

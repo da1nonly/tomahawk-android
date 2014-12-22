@@ -38,7 +38,7 @@ import org.tomahawk.libtomahawk.utils.TomahawkUtils;
 import org.tomahawk.tomahawk_android.R;
 import org.tomahawk.tomahawk_android.TomahawkApp;
 import org.tomahawk.tomahawk_android.activities.TomahawkMainActivity;
-import org.tomahawk.tomahawk_android.fragments.FakePreferenceFragment;
+import org.tomahawk.tomahawk_android.fragments.PreferenceAdvancedFragment;
 import org.tomahawk.tomahawk_android.mediaplayers.DeezerMediaPlayer;
 import org.tomahawk.tomahawk_android.mediaplayers.RdioMediaPlayer;
 import org.tomahawk.tomahawk_android.mediaplayers.SpotifyMediaPlayer;
@@ -394,9 +394,8 @@ public class PlaybackService extends Service
                 Log.d(TAG, "Headset has been plugged in");
                 SharedPreferences prefs =
                         PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                boolean playbackOnHeadsetInsert = prefs
-                        .getBoolean(FakePreferenceFragment.FAKEPREFERENCEFRAGMENT_KEY_PLUGINTOPLAY,
-                                false);
+                boolean playbackOnHeadsetInsert = prefs.getBoolean(
+                        PreferenceAdvancedFragment.FAKEPREFERENCEFRAGMENT_KEY_PLUGINTOPLAY, false);
 
                 if (!isPlaying() && playbackOnHeadsetInsert) {
                     //resume playback, if user has set the "resume on headset plugin" preference
@@ -592,7 +591,7 @@ public class PlaybackService extends Service
                 + getCurrentQuery().getName() + "' by '"
                 + getCurrentQuery().getArtist().getName()
                 + "' resolved by Resolver " + getCurrentQuery()
-                .getPreferredTrackResult().getResolvedBy());
+                .getPreferredTrackResult().getResolvedBy().getId());
         boolean allPlayersReleased = true;
         for (MediaPlayerInterface mediaPlayer : mMediaPlayers) {
             if (!mediaPlayer.isPrepared(getCurrentQuery())) {
@@ -706,14 +705,16 @@ public class PlaybackService extends Service
      */
     public void start() {
         Log.d(TAG, "start");
-        mPlayState = PLAYBACKSERVICE_PLAYSTATE_PLAYING;
-        sendBroadcast(new Intent(BROADCAST_PLAYSTATECHANGED));
-        handlePlayState();
+        if (getCurrentQuery() != null) {
+            mPlayState = PLAYBACKSERVICE_PLAYSTATE_PLAYING;
+            sendBroadcast(new Intent(BROADCAST_PLAYSTATECHANGED));
+            handlePlayState();
 
-        mShowingNotification = true;
-        updateNotification();
-        tryToGetAudioFocus();
-        updateLockscreenPlayState();
+            mShowingNotification = true;
+            updateNotification();
+            tryToGetAudioFocus();
+            updateLockscreenPlayState();
+        }
     }
 
     /**

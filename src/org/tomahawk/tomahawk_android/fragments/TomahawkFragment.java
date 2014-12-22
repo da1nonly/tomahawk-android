@@ -125,12 +125,6 @@ public abstract class TomahawkFragment extends TomahawkListFragment
     public static final String SHOW_MODE
             = "org.tomahawk.tomahawk_android.show_mode";
 
-    public static final String CONTAINER_FRAGMENT_PAGE
-            = "org.tomahawk.tomahawk_android.container_fragment_page";
-
-    public static final String CONTAINER_FRAGMENT_NAME
-            = "org.tomahawk.tomahawk_android.container_fragment_name";
-
     protected static final int RESOLVE_QUERIES_REPORTER_MSG = 1336;
 
     protected static final long RESOLVE_QUERIES_REPORTER_DELAY = 100;
@@ -181,8 +175,6 @@ public abstract class TomahawkFragment extends TomahawkListFragment
     private int mVisibleItemCount = 0;
 
     protected int mShowMode;
-
-    protected Class mContainerFragmentClass;
 
     protected final Handler mResolveQueriesHandler = new Handler() {
         @Override
@@ -278,7 +270,6 @@ public abstract class TomahawkFragment extends TomahawkListFragment
     public void onResume() {
         super.onResume();
 
-        TomahawkMainActivity activity = (TomahawkMainActivity) getActivity();
         if (getArguments() != null) {
             if (getArguments().containsKey(TOMAHAWK_ALBUM_KEY)
                     && !TextUtils.isEmpty(getArguments().getString(TOMAHAWK_ALBUM_KEY))) {
@@ -339,21 +330,6 @@ public abstract class TomahawkFragment extends TomahawkListFragment
                     }
                 }
             }
-            if (getArguments().containsKey(CONTAINER_FRAGMENT_NAME)) {
-                String fragmentName = getArguments().getString(CONTAINER_FRAGMENT_NAME);
-                if (fragmentName.equals(ArtistPagerFragment.class.getName())) {
-                    mContainerFragmentClass = ArtistPagerFragment.class;
-                } else if (fragmentName.equals(SearchPagerFragment.class.getName())) {
-                    mContainerFragmentClass = SearchPagerFragment.class;
-                } else if (fragmentName.equals(UserPagerFragment.class.getName())) {
-                    mContainerFragmentClass = UserPagerFragment.class;
-                } else if (fragmentName.equals(CollectionPagerFragment.class.getName())) {
-                    mContainerFragmentClass = CollectionPagerFragment.class;
-                }
-            }
-            if (getArguments().containsKey(CONTAINER_FRAGMENT_PAGE)) {
-                getListView().setTag(getArguments().getInt(CONTAINER_FRAGMENT_PAGE));
-            }
             if (getArguments().containsKey(TOMAHAWK_USERARRAY_ID)) {
                 mSearchUsers = new ArrayList<User>();
                 for (String userId : getArguments().getStringArrayList(TOMAHAWK_USERARRAY_ID)) {
@@ -389,6 +365,7 @@ public abstract class TomahawkFragment extends TomahawkListFragment
             }
         }
 
+        TomahawkMainActivity activity = (TomahawkMainActivity) getActivity();
         // Initialize and register Receiver
         if (mTomahawkFragmentReceiver == null) {
             mTomahawkFragmentReceiver = new TomahawkFragmentReceiver();
@@ -440,15 +417,15 @@ public abstract class TomahawkFragment extends TomahawkListFragment
     }
 
     @Override
-    public abstract void onItemClick(View view, TomahawkListItem item);
+    public abstract void onItemClick(View view, Object item);
 
     /**
      * Called every time an item inside a ListView or GridView is long-clicked
      *
-     * @param item the TomahawkListItem which corresponds to the long-click
+     * @param item the Object which corresponds to the long-click
      */
     @Override
-    public boolean onItemLongClick(View view, TomahawkListItem item) {
+    public boolean onItemLongClick(View view, Object item) {
         TomahawkListItem contextItem = null;
         if (mAlbum != null) {
             contextItem = mAlbum;
@@ -457,8 +434,8 @@ public abstract class TomahawkFragment extends TomahawkListFragment
         } else if (mPlaylist != null) {
             contextItem = mPlaylist;
         }
-        return FragmentUtils.showContextMenu((TomahawkMainActivity) getActivity(),
-                getActivity().getSupportFragmentManager(), item, contextItem, false);
+        return FragmentUtils.showContextMenu((TomahawkMainActivity) getActivity(), item,
+                contextItem);
     }
 
     /**
@@ -480,6 +457,18 @@ public abstract class TomahawkFragment extends TomahawkListFragment
      * Update this {@link TomahawkFragment}'s {@link TomahawkListAdapter} content
      */
     protected abstract void updateAdapter();
+
+    /**
+     * This method _MUST_ be called at the end of updateAdapter (with the exception of
+     * PlaybackFragment)
+     */
+    protected void onUpdateAdapterFinished() {
+        updateShowPlaystate();
+        forceAutoResolve();
+        setupNonScrollableSpacer();
+        setupScrollableSpacer();
+        setupAnimations();
+    }
 
     /**
      * If the PlaybackService signals, that it is ready, this method is being called
@@ -564,7 +553,7 @@ public abstract class TomahawkFragment extends TomahawkListFragment
         }
     }
 
-    protected void forceAutoResolve(){
+    protected void forceAutoResolve() {
         mResolveQueriesHandler.removeCallbacksAndMessages(null);
         mResolveQueriesHandler.sendEmptyMessageDelayed(RESOLVE_QUERIES_REPORTER_MSG,
                 RESOLVE_QUERIES_REPORTER_DELAY);
