@@ -3,15 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-<<<<<<< HEAD
-<<<<<<< HEAD
-        classpath 'com.android.tools.build:gradle:0.14.0'
-=======
-        classpath 'com.android.tools.build:gradle:1.0.0-rc1'
->>>>>>> upstream/master
-=======
         classpath 'com.android.tools.build:gradle:1.0.0'
->>>>>>> c0156f1bb5707f858c9a6d0484b770841453ba54
     }
 }
 
@@ -68,32 +60,16 @@ def getNewVersionName = { ->
 
 android {
     compileSdkVersion 21
-<<<<<<< HEAD
-<<<<<<< HEAD
-    buildToolsVersion "21.1.0"
-=======
-    buildToolsVersion "21.1.1"
->>>>>>> upstream/master
-=======
     buildToolsVersion "21.1.2"
->>>>>>> c0156f1bb5707f858c9a6d0484b770841453ba54
 
     defaultConfig {
         minSdkVersion 11
         targetSdkVersion 21
         renderscriptTargetApi 21
         renderscriptSupportModeEnabled true
-<<<<<<< HEAD
-        versionName '0.74'
-        versionCode 740
-=======
         versionName '0.76'
         versionCode 760
-<<<<<<< HEAD
->>>>>>> upstream/master
-=======
         multiDexEnabled true
->>>>>>> c0156f1bb5707f858c9a6d0484b770841453ba54
         ndk {
             moduleName "libspotifywrapper"
             stl "stlport_static"
@@ -186,9 +162,9 @@ android {
 // example: ANDROID_NDK_HOME /home/maffen/SDKs/android-ndk-r8e
 task ndkBuild(type: Exec) {
     if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-        commandLine new File((String) '/Users/ashrafali/android-ndk-r10c/ndk-build.cmd')
+        commandLine new File((String) System.env.ANDROID_NDK_HOME, 'ndk-build.cmd')
     } else {
-        commandLine new File((String) '/Users/ashrafali/android-ndk-r10c/ndk-build')
+        commandLine new File((String) System.env.ANDROID_NDK_HOME, 'ndk-build')
     }
 }
 

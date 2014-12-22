@@ -46,22 +46,6 @@ public class FragmentUtils {
 
     public static final String FRAGMENT_TAG = "the_ultimate_tag";
 
-<<<<<<< HEAD
-    public static void addRootFragment(TomahawkMainActivity activity,
-<<<<<<< HEAD
-            FragmentManager fragmentManager) {
-        HatchetAuthenticatorUtils hatchetAuthUtils =
-                (HatchetAuthenticatorUtils) AuthenticatorManager.getInstance()
-                        .getAuthenticatorUtils(TomahawkApp.PLUGINNAME_HATCHET);
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        if (hatchetAuthUtils.isLoggedIn()) {
-            Bundle bundle = new Bundle();
-            bundle.putString(TomahawkFragment.TOMAHAWK_USER_ID,
-                    hatchetAuthUtils.getLoggedInUser().getId());
-=======
-            FragmentManager fragmentManager, User loggedInUser) {
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-=======
     /**
      * Add a root fragment as the first fragment the user is seeing after opening the app.
      *
@@ -72,11 +56,9 @@ public class FragmentUtils {
      */
     public static void addRootFragment(TomahawkMainActivity activity, User loggedInUser) {
         FragmentTransaction ft = activity.getSupportFragmentManager().beginTransaction();
->>>>>>> c0156f1bb5707f858c9a6d0484b770841453ba54
         if (loggedInUser != null) {
             Bundle bundle = new Bundle();
             bundle.putString(TomahawkFragment.TOMAHAWK_USER_ID, loggedInUser.getId());
->>>>>>> upstream/master
             bundle.putInt(TomahawkFragment.SHOW_MODE, SocialActionsFragment.SHOW_MODE_DASHBOARD);
             bundle.putInt(ContentHeaderFragment.MODE, ContentHeaderFragment.MODE_ACTIONBAR_FILLED);
             ft.add(R.id.content_viewer_frame,

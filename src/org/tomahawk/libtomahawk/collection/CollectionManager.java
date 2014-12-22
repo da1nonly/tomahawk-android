@@ -67,15 +67,9 @@ public class CollectionManager {
     public static final String COLLECTION_ID = "org.tomahawk.tomahawk_android.collection_id";
 
     private static class Holder {
-<<<<<<< HEAD
 
         private static final CollectionManager instance = new CollectionManager();
 
-=======
-
-        private static final CollectionManager instance = new CollectionManager();
-
->>>>>>> upstream/master
     }
 
     private ConcurrentHashMap<String, Collection> mCollections
@@ -160,14 +154,7 @@ public class CollectionManager {
 
         ensureLovedItemsPlaylist();
         updatePlaylists();
-<<<<<<< HEAD
-        fetchPlaylists();
-        fetchLovedItemsPlaylist();
-        fetchStarredAlbums();
-        fetchStarredArtists();
-=======
         fetchAll();
->>>>>>> upstream/master
 
         TomahawkApp.getContext().registerReceiver(mCollectionManagerReceiver,
                 new IntentFilter(InfoSystem.INFOSYSTEM_RESULTSREPORTED));
@@ -175,8 +162,6 @@ public class CollectionManager {
                 new IntentFilter(InfoSystem.INFOSYSTEM_OPLOGISEMPTIED));
         TomahawkApp.getContext().registerReceiver(mCollectionManagerReceiver,
                 new IntentFilter(DatabaseHelper.PLAYLISTSDATASOURCE_RESULTSREPORTED));
-<<<<<<< HEAD
-=======
     }
 
     public void fetchAll() {
@@ -184,7 +169,6 @@ public class CollectionManager {
         fetchLovedItemsPlaylist();
         fetchStarredAlbums();
         fetchStarredArtists();
->>>>>>> upstream/master
     }
 
     public static CollectionManager getInstance() {

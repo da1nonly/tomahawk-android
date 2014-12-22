@@ -20,11 +20,8 @@ package org.tomahawk.tomahawk_android.dialogs;
 import org.tomahawk.libtomahawk.authentication.AuthenticatorManager;
 import org.tomahawk.libtomahawk.authentication.AuthenticatorUtils;
 import org.tomahawk.libtomahawk.authentication.HatchetAuthenticatorUtils;
-<<<<<<< HEAD
-=======
 import org.tomahawk.libtomahawk.resolver.HatchetStubResolver;
 import org.tomahawk.libtomahawk.resolver.PipeLine;
->>>>>>> c0156f1bb5707f858c9a6d0484b770841453ba54
 import org.tomahawk.tomahawk_android.R;
 import org.tomahawk.tomahawk_android.TomahawkApp;
 import org.tomahawk.tomahawk_android.fragments.TomahawkFragment;
