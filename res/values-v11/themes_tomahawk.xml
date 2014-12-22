@@ -3,41 +3,33 @@
 <!-- Generated with http://android-holo-colors.com -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-  <style name="tomahawk" parent="@style/_tomahawk"/>
+    <style name="Theme.Tomahawk" parent="@style/Theme.AppCompat.Light.DarkActionBar">
 
-  <style name="_tomahawk" parent="Theme.AppCompat.Light">
+        <item name="android:editTextBackground">@drawable/tomahawk_edit_text_holo_light</item>
 
-    <item name="android:editTextBackground">@drawable/tomahawk_edit_text_holo_light</item>
+        <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewTomahawk</item>
 
-    <item name="android:textColorHighlight">#993aad1e</item>
-    <item name="android:textSelectHandleLeft">@drawable/tomahawk_text_select_handle_left</item>
-    <item name="android:textSelectHandleRight">@drawable/tomahawk_text_select_handle_right</item>
-    <item name="android:textSelectHandle">@drawable/tomahawk_text_select_handle_middle</item>
+        <item name="android:listChoiceIndicatorMultiple">@drawable/tomahawk_btn_check_holo_light
+        </item>
 
-    <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewtomahawk</item>
+        <item name="android:progressBarStyleHorizontal">@style/ProgressBarTomahawk</item>
 
-    <item name="android:listChoiceIndicatorMultiple">@drawable/tomahawk_btn_check_holo_light</item>
+        <item name="android:listChoiceBackgroundIndicator">
+            @drawable/tomahawk_list_selector_holo_light
+        </item>
 
-    <item name="android:listChoiceIndicatorSingle">@drawable/tomahawk_btn_radio_holo_light</item>
+        <item name="android:activatedBackgroundIndicator">
+            @drawable/tomahawk_activated_background_holo_light
+        </item>
 
-    <item name="android:buttonStyle">@style/Buttontomahawk</item>
+        <item name="android:fastScrollThumbDrawable">@drawable/tomahawk_fastscroll_thumb_holo</item>
 
-    <item name="android:imageButtonStyle">@style/ImageButtontomahawk</item>
+        <item name="colorPrimary">@color/tomahawk_red</item>
 
-    <item name="android:dropDownSpinnerStyle">@style/Spinnertomahawk</item>
+        <item name="colorPrimaryDark">@color/tomahawk_red</item>
 
-    <item name="android:progressBarStyleHorizontal">@style/ProgressBartomahawk</item>
+        <item name="circularProgressBarStyle">@style/CircularProgressBarPlayButton</item>
 
-    <item name="android:seekBarStyle">@style/SeekBartomahawk</item>
-
-    <item name="android:buttonStyleToggle">@style/Toggletomahawk</item>
-
-    <item name="android:listChoiceBackgroundIndicator">@drawable/tomahawk_list_selector_holo_light</item>
-
-    <item name="android:activatedBackgroundIndicator">@drawable/tomahawk_activated_background_holo_light</item>
-
-    <item name="android:fastScrollThumbDrawable">@drawable/tomahawk_fastscroll_thumb_holo</item>
-
-  </style>
+    </style>
 
 </resources>
