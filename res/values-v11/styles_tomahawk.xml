@@ -3,26 +3,37 @@
 <!-- Generated with http://android-holo-colors.com -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="AutoCompleteTextViewTomahawk"
-           parent="android:Widget.Holo.Light.AutoCompleteTextView">
-        <item name="android:dropDownSelector">@drawable/tomahawk_list_selector_holo_light</item>
-        <item name="android:background">@drawable/tomahawk_edit_text_holo_light</item>
-    </style>
+  <style name="AutoCompleteTextViewtomahawk" parent="android:Widget.Holo.Light.AutoCompleteTextView">
+      <item name="android:dropDownSelector">@drawable/tomahawk_list_selector_holo_light</item>
+	    <item name="android:background">@drawable/tomahawk_edit_text_holo_light</item>
+  </style>
 
-    <style name="ProgressBarTomahawk" parent="android:Widget.Holo.Light.ProgressBar.Horizontal">
-        <item name="android:progressDrawable">@drawable/tomahawk_progress_horizontal_holo_light
-        </item>
-        <item name="android:indeterminateDrawable">
-            @drawable/tomahawk_progress_indeterminate_horizontal_holo_light
-        </item>
-    </style>
+  <style name="Buttontomahawk" parent="android:Widget.Holo.Light.Button">
+	  <item name="android:background">@drawable/tomahawk_btn_default_holo_light</item>
+  </style>
 
-    <style name="ProgressBarWhiteTomahawk" parent="android:Widget.Holo.Light.ProgressBar.Horizontal">
-        <item name="android:progressDrawable">@drawable/tomahawk_progress_horizontal_white
-        </item>
-        <item name="android:indeterminateDrawable">
-            @drawable/tomahawk_progress_indeterminate_horizontal_holo_light
-        </item>
-    </style>
+  <style name="ImageButtontomahawk" parent="android:Widget.Holo.Light.ImageButton">
+	  <item name="android:background">@drawable/tomahawk_btn_default_holo_light</item>
+  </style>
+
+  <style name="Spinnertomahawk" parent="android:Widget.Holo.Light.Spinner">
+      <item name="android:background">@drawable/tomahawk_spinner_background_holo_light</item>
+      <item name="android:dropDownSelector">@drawable/tomahawk_list_selector_holo_light</item>
+  </style>
+
+  <style name="ProgressBartomahawk" parent="android:Widget.Holo.Light.ProgressBar.Horizontal">
+      <item name="android:progressDrawable">@drawable/tomahawk_progress_horizontal_holo_light</item>
+      <item name="android:indeterminateDrawable">@drawable/tomahawk_progress_indeterminate_horizontal_holo_light</item>
+  </style>
+
+  <style name="SeekBartomahawk" parent="android:Widget.Holo.Light.SeekBar">
+      <item name="android:progressDrawable">@drawable/tomahawk_scrubber_progress_horizontal_holo_light</item>
+      <item name="android:indeterminateDrawable">@drawable/tomahawk_scrubber_progress_horizontal_holo_light</item>
+      <item name="android:thumb">@drawable/tomahawk_scrubber_control_selector_holo_light</item>
+  </style>
+
+  <style name="Toggletomahawk" parent="android:Widget.Holo.Light.Button.Toggle">
+      <item name="android:background">@drawable/tomahawk_btn_toggle_holo_light</item>
+  </style>
 
 </resources>

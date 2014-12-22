@@ -3,47 +3,40 @@
 <!-- Generated with http://android-holo-colors.com -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="Theme.Tomahawk" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+  <style name="tomahawk" parent="@style/_tomahawk"/>
 
-        <item name="android:editTextStyle">@style/EditTextTomahawk</item>
+  <style name="_tomahawk" parent="Theme.AppCompat.Light">
 
-        <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewTomahawk</item>
+    <item name="android:editTextStyle">@style/EditTexttomahawk</item>
 
-        <item name="android:checkboxStyle">@style/CheckBoxTomahawk</item>
+    <item name="android:textColorHighlight">#993aad1e</item>
 
-        <item name="android:progressBarStyleHorizontal">@style/ProgressBarTomahawk</item>
+    <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewtomahawk</item>
 
-        <item name="android:listViewStyle">@style/ListViewTomahawk</item>
+    <item name="android:checkboxStyle">@style/CheckBoxtomahawk</item>
 
-        <item name="android:listViewWhiteStyle">@style/ListViewTomahawk.White</item>
+    <item name="android:radioButtonStyle">@style/RadioButtontomahawk</item>
 
-        <item name="actionBarItemBackground">@drawable/selectable_background_tomahawk</item>
-        <item name="popupMenuStyle">@style/PopupMenu.Tomahawk</item>
-        <item name="dropDownListViewStyle">@style/DropDownListView.Tomahawk</item>
-        <item name="actionBarTabStyle">@style/ActionBarTabStyle.Tomahawk</item>
-        <item name="actionDropDownStyle">@style/DropDownNav.Tomahawk</item>
-        <item name="actionBarStyle">@style/ActionBar.Solid.Tomahawk</item>
-        <item name="actionModeBackground">@drawable/cab_background_top_tomahawk</item>
-        <item name="actionModeSplitBackground">@drawable/cab_background_bottom_tomahawk</item>
-        <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Tomahawk</item>
+    <item name="android:buttonStyle">@style/Buttontomahawk</item>
 
-        <!-- Light.DarkActionBar specific -->
-        <item name="actionBarWidgetTheme">@style/Theme.Tomahawk.Widget</item>
+    <item name="android:imageButtonStyle">@style/ImageButtontomahawk</item>
 
-        <item name="colorPrimary">@color/tomahawk_red</item>
+    <item name="android:spinnerStyle">@style/Spinnertomahawk</item>
 
-        <item name="colorPrimaryDark">@color/tomahawk_red</item>
+    <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItemtomahawk</item>
 
-        <item name="circularProgressBarStyle">@style/CircularProgressBarPlayButton</item>
+    <item name="android:progressBarStyleHorizontal">@style/ProgressBartomahawk</item>
 
-    </style>
+    <item name="android:seekBarStyle">@style/SeekBartomahawk</item>
 
-    <style name="Theme.Tomahawk.Transparent.ActionBar" parent="@style/Theme.Tomahawk">
+    <item name="android:buttonStyleToggle">@style/Toggletomahawk</item>
 
-        <item name="actionBarStyle">@style/ActionBar.Transparent.Tomahawk</item>
-        <item name="windowActionBarOverlay">true</item>
-        <item name="android:windowContentOverlay">@null</item>
+    <item name="android:listViewStyle">@style/ListViewtomahawk</item>
 
-    </style>
+    <item name="android:listViewWhiteStyle">@style/ListViewtomahawk.White</item>
+
+    <item name="android:spinnerItemStyle">@style/SpinnerItemtomahawk</item>
+
+  </style>
 
 </resources>
