@@ -21,7 +21,7 @@
 <resources>
 
     <color name="tomahawk_red">#3aad1e</color>
-    <color name="tomahawk_red_transparent">#DDff004c</color>
+    <color name="tomahawk_red_transparent">#3aad1e</color>
     <color name="divider">#3B3F45</color>
     <color name="primary_background">#FFffffff</color>
     <color name="secondary_background">#FF777777</color>
@@ -45,7 +45,7 @@
 
     <color name="local_collection_resolver_bg">#3e454b</color>
     <color name="spotify_resolver_bg">#84bd00</color>
-    <color name="hatchet_resolver_bg">#3892e3</color>
+    <color name="hatchet_resolver_bg">#3aad1e</color>
     <color name="deezer_resolver_bg">#22222c</color>
     <color name="quranmp3_resolver_bg">#3aad1e</color>
 
