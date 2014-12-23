@@ -31,7 +31,7 @@
     <View android:id="@+id/darkening_background"
           android:layout_width="match_parent"
           android:layout_height="match_parent"
-          android:background="@color/tertiary_transparent"
+          android:background="@color/navdrawer_background"
           android:visibility="gone"/>
 
     <LinearLayout android:id="@+id/selector_frame"

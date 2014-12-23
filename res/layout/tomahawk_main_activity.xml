@@ -46,7 +46,8 @@
 
                 <FrameLayout android:id="@+id/playback_fragment_frame"
                              android:layout_width="match_parent"
-                             android:layout_height="match_parent"/>
+                             android:layout_height="match_parent"
+                             android:background="@color/navdrawer_background"/>
 
             </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
