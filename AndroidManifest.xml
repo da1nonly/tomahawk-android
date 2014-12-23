@@ -45,13 +45,13 @@
     <application
             android:name="org.tomahawk.tomahawk_android.TomahawkApp"
             android:icon="@drawable/ic_launcher"
-            android:label="Tomahawk"
+            android:label="Quran Mp3"
             android:allowBackup="true"
             android:theme="@style/Theme.Tomahawk">
 
         <activity
                 android:name=".activities.TomahawkMainActivity"
-                android:label="Tomahawk"
+                android:label="Quran Mp3"
                 android:launchMode="singleTask"
                 android:windowSoftInputMode="adjustPan"
                 android:theme="@style/Theme.Tomahawk.Transparent.ActionBar">
@@ -766,7 +766,7 @@
         <activity android:name="org.acra.CrashReportDialog"
                   android:launchMode="singleInstance"
                   android:excludeFromRecents="true"
-                  android:finishOnTaskLaunch="true"/>
+                  android:finishOnTaskLaunch="false"/>
     </application>
 
 </manifest>
