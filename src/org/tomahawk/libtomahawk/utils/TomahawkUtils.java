@@ -598,23 +598,23 @@ public class TomahawkUtils {
      */
     public static void loadBlurredImageIntoImageView(Context context, ImageView imageView,
             Image image, int width, int placeHolderResId) {
-        if (image != null && !TextUtils.isEmpty(image.getImagePath())) {
-            String imagePath = buildImagePath(context, image, width);
-            RequestCreator creator = Picasso.with(context).load(
-                    TomahawkUtils.preparePathForPicasso(imagePath)).resize(width, width);
-            if (placeHolderResId > 0) {
-                creator.placeholder(placeHolderResId);
-                creator.error(placeHolderResId);
-            }
-            creator.transform(new BlurTransformation());
-            creator.into(imageView);
-        } else {
+//        if (image != null && !TextUtils.isEmpty(image.getImagePath())) {
+//            String imagePath = buildImagePath(context, image, width);
+//            RequestCreator creator = Picasso.with(context).load(
+//                    TomahawkUtils.preparePathForPicasso(imagePath)).resize(width, width);
+//            if (placeHolderResId > 0) {
+//                creator.placeholder(placeHolderResId);
+//                creator.error(placeHolderResId);
+//            }
+//            creator.transform(new BlurTransformation());
+//            creator.into(imageView);
+//        } else {
             RequestCreator creator = Picasso.with(context).load(placeHolderResId)
                     .placeholder(placeHolderResId)
                     .error(placeHolderResId);
             creator.transform(new BlurTransformation());
             creator.into(imageView);
-        }
+//        }
     }
 
     /**
@@ -630,17 +630,17 @@ public class TomahawkUtils {
             int width, boolean fit, boolean isArtistImage) {
         int placeHolder = isArtistImage ? R.drawable.artist_placeholder_grid
                 : R.drawable.album_placeholder_grid;
-        if (image != null && !TextUtils.isEmpty(image.getImagePath())) {
-            String imagePath = buildImagePath(context, image, width);
-            RequestCreator creator = Picasso.with(context).load(
-                    TomahawkUtils.preparePathForPicasso(imagePath))
-                    .placeholder(placeHolder)
-                    .error(placeHolder);
-            if (fit) {
-                creator.resize(width, width);
-            }
-            creator.into(imageView);
-        } else {
+//        if (image != null && !TextUtils.isEmpty(image.getImagePath())) {
+//            String imagePath = buildImagePath(context, image, width);
+//            RequestCreator creator = Picasso.with(context).load(
+//                    TomahawkUtils.preparePathForPicasso(imagePath))
+//                    .placeholder(placeHolder)
+//                    .error(placeHolder);
+//            if (fit) {
+//                creator.resize(width, width);
+//            }
+//            creator.into(imageView);
+//        } else {
             RequestCreator creator = Picasso.with(context).load(placeHolder)
                     .placeholder(placeHolder)
                     .error(placeHolder);
@@ -648,7 +648,7 @@ public class TomahawkUtils {
                 creator.resize(width, width);
             }
             creator.into(imageView);
-        }
+//        }
     }
 
     /**
@@ -665,16 +665,16 @@ public class TomahawkUtils {
     public static void loadUserImageIntoImageView(Context context, ImageView imageView,
             User user, int width, TextView textView) {
         int placeHolder = R.drawable.circle_black;
-        if (user.getImage() != null && !TextUtils.isEmpty(user.getImage().getImagePath())) {
-            textView.setVisibility(View.GONE);
-            String imagePath = buildImagePath(context, user.getImage(), width);
-            Picasso.with(context).load(TomahawkUtils.preparePathForPicasso(imagePath))
-                    .transform(new CircularImageTransformation())
-                    .placeholder(placeHolder)
-                    .error(placeHolder)
-                    .fit()
-                    .into(imageView);
-        } else {
+//        if (user.getImage() != null && !TextUtils.isEmpty(user.getImage().getImagePath())) {
+//            textView.setVisibility(View.GONE);
+//            String imagePath = buildImagePath(context, user.getImage(), width);
+//            Picasso.with(context).load(TomahawkUtils.preparePathForPicasso(imagePath))
+//                    .transform(new CircularImageTransformation())
+//                    .placeholder(placeHolder)
+//                    .error(placeHolder)
+//                    .fit()
+//                    .into(imageView);
+//        } else {
             textView.setVisibility(View.VISIBLE);
             textView.setText(user.getName().substring(0, 1).toUpperCase());
             Picasso.with(context).load(placeHolder)
@@ -682,7 +682,7 @@ public class TomahawkUtils {
                     .error(placeHolder)
                     .fit()
                     .into(imageView);
-        }
+//        }
     }
 
     /**
@@ -759,16 +759,16 @@ public class TomahawkUtils {
             boolean isArtistImage) {
         int placeHolder = isArtistImage ? R.drawable.artist_placeholder_grid
                 : R.drawable.album_placeholder_grid;
-        if (image != null && !TextUtils.isEmpty(image.getImagePath())) {
-            String imagePath = buildImagePath(context, image, width);
-            Picasso.with(context).load(TomahawkUtils.preparePathForPicasso(imagePath))
-                    .resize(width, width)
-                    .into(target);
-        } else {
+//        if (image != null && !TextUtils.isEmpty(image.getImagePath())) {
+//            String imagePath = buildImagePath(context, image, width);
+//            Picasso.with(context).load(TomahawkUtils.preparePathForPicasso(imagePath))
+//                    .resize(width, width)
+//                    .into(target);
+//        } else {
             Picasso.with(context).load(placeHolder)
                     .resize(width, width)
                     .into(target);
-        }
+//        }
     }
 
     /**
@@ -783,16 +783,16 @@ public class TomahawkUtils {
             int width, boolean isArtistImage) {
         int placeHolder = isArtistImage ? R.drawable.artist_placeholder_grid
                 : R.drawable.album_placeholder_grid;
-        if (image != null && !TextUtils.isEmpty(image.getImagePath())) {
-            String imagePath = buildImagePath(context, image, width);
-            Picasso.with(context).load(TomahawkUtils.preparePathForPicasso(imagePath))
-                    .resize(width, width)
-                    .into(remoteViews, viewId, notificationId, notification);
-        } else {
+//        if (image != null && !TextUtils.isEmpty(image.getImagePath())) {
+//            String imagePath = buildImagePath(context, image, width);
+//            Picasso.with(context).load(TomahawkUtils.preparePathForPicasso(imagePath))
+//                    .resize(width, width)
+//                    .into(remoteViews, viewId, notificationId, notification);
+//        } else {
             Picasso.with(context).load(placeHolder)
                     .resize(width, width)
                     .into(remoteViews, viewId, notificationId, notification);
-        }
+//        }
     }
 
     /**

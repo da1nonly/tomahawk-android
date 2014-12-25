@@ -69,7 +69,7 @@ var QuranMp3Resolver = Tomahawk.extend(TomahawkResolver, {
             source: "quran-mp3",
             url: item.url,
             extension: "mp3",
-            score: 1.0
+            score: 1.00
         };
         return result;
     },
