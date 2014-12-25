@@ -31,6 +31,8 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.graphics.drawable.ColorDrawable;
+
 /**
  * {@link org.tomahawk.tomahawk_android.fragments.TomahawkFragment} which shows a set of {@link
  * org.tomahawk.libtomahawk.collection.Artist}s inside its {@link se.emilsjolander.stickylistheaders.StickyListHeadersListView}
@@ -90,7 +92,8 @@ public class CloudCollectionFragment extends TomahawkFragment {
             } else {
                 getListAdapter().setSegments(new Segment(artists), getListView());
             }
-            showContentHeader(R.drawable.collection_header);
+            showContentHeader(
+                    new ColorDrawable(getResources().getColor(R.color.emerald_green)));
         }
 
         onUpdateAdapterFinished();

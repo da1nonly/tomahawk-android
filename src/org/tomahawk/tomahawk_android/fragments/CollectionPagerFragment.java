@@ -26,6 +26,8 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.graphics.drawable.ColorDrawable;
+
 public class CollectionPagerFragment extends PagerFragment {
 
     /**
@@ -45,7 +47,8 @@ public class CollectionPagerFragment extends PagerFragment {
             }
         }
 
-        showContentHeader(R.drawable.collection_header);
+        showContentHeader(
+                new ColorDrawable(getResources().getColor(R.color.emerald_green)));
 
         List<FragmentInfoList> fragmentInfoLists = new ArrayList<FragmentInfoList>();
         FragmentInfoList fragmentInfoList = new FragmentInfoList();

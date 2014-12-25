@@ -43,6 +43,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import android.graphics.drawable.ColorDrawable;
+
 /**
  * {@link TomahawkFragment} which shows a set of {@link org.tomahawk.libtomahawk.collection.Playlist}s
  * inside its {@link se.emilsjolander.stickylistheaders.StickyListHeadersListView}
@@ -154,7 +156,8 @@ public class PlaylistsFragment extends TomahawkFragment {
         } else {
             getListAdapter().setSegments(segment, getListView());
         }
-        showContentHeader(R.drawable.playlists_header);
+        showContentHeader(
+                new ColorDrawable(getResources().getColor(R.color.emerald_green)));
 
         onUpdateAdapterFinished();
     }

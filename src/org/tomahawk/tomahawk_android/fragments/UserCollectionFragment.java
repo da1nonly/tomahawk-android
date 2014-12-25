@@ -41,6 +41,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import android.graphics.drawable.ColorDrawable;
+
 public class UserCollectionFragment extends TomahawkFragment {
 
     public static final String USER_COLLECTION_SPINNER_POSITION
@@ -165,7 +167,8 @@ public class UserCollectionFragment extends TomahawkFragment {
         if (!getResources().getBoolean(R.bool.is_landscape)) {
             getListView().setAreHeadersSticky(true);
         }
-        showContentHeader(R.drawable.collection_header);
+        showContentHeader(
+                new ColorDrawable(getResources().getColor(R.color.emerald_green)));
 
         onUpdateAdapterFinished();
     }
