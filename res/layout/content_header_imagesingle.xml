@@ -28,6 +28,8 @@
                android:layout_width="match_parent"
                android:layout_height="match_parent"
                android:scaleType="centerCrop"
-               android:src="@drawable/album_placeholder_grid"/>
+               android:background="@color/emerald_green"/>
+               <!--android:src="@drawable/album_placeholder_grid"-->
+
 
 </org.tomahawk.tomahawk_android.ui.widgets.SquareWidthRelativeLayout>

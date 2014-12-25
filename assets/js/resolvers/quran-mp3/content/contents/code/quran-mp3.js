@@ -21,8 +21,8 @@ var QuranMp3Resolver = Tomahawk.extend(TomahawkResolver, {
     settings: {
         name: "Quran Mp3",
         icon: "quran-mp3-icon.png",
-        weight: 90,
-        timeout: 5
+        weight: 95,
+        timeout: 10
     },
     init: function () {
         Tomahawk.reportCapabilities(TomahawkResolverCapability.Browsable | TomahawkResolverCapability.UrlLookup);

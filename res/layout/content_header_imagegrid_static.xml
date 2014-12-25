@@ -38,7 +38,7 @@
                        android:layout_weight="1"
                        android:scaleType="centerCrop"
                        android:adjustViewBounds="true"
-                       android:src="@drawable/album_placeholder_grid"/>
+                       android:background="@color/emerald_green"/>
 
             <ImageView android:id="@+id/imageview2"
                        android:layout_width="0dp"
@@ -46,7 +46,7 @@
                        android:layout_weight="1"
                        android:scaleType="centerCrop"
                        android:adjustViewBounds="true"
-                       android:src="@drawable/album_placeholder_grid"/>
+                       android:background="@color/emerald_green"/>
 
         </LinearLayout>
 
@@ -60,7 +60,7 @@
                        android:layout_weight="1"
                        android:scaleType="centerCrop"
                        android:adjustViewBounds="true"
-                       android:src="@drawable/album_placeholder_grid"/>
+                       android:background="@color/emerald_green"/>
 
             <ImageView android:id="@+id/imageview4"
                        android:layout_width="0dp"
@@ -68,7 +68,7 @@
                        android:layout_weight="1"
                        android:scaleType="centerCrop"
                        android:adjustViewBounds="true"
-                       android:src="@drawable/album_placeholder_grid"/>
+                       android:background="@color/emerald_green"/>
 
         </LinearLayout>
 
