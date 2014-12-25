@@ -98,6 +98,6 @@
                android:layout_gravity="center"
                android:scaleType="center"
                android:src="@drawable/splash"
-               android:background="@color/primary_background"/>
+               android:background="@color/emerald_green"/>
 
 </FrameLayout>

@@ -96,14 +96,15 @@ public class PreferenceConnectFragment extends TomahawkListFragment
 
         // Add all resolver grid items
         List resolvers = new ArrayList();
-        resolvers.add(PipeLine.getInstance().getResolver(TomahawkApp.PLUGINNAME_USERCOLLECTION));
-        resolvers.add(new HatchetStubResolver(HatchetAuthenticatorUtils.HATCHET_PRETTY_NAME, null));
-        resolvers.add(PipeLine.getInstance().getResolver(TomahawkApp.PLUGINNAME_SPOTIFY));
+
+        //resolvers.add(PipeLine.getInstance().getResolver(TomahawkApp.PLUGINNAME_SPOTIFY));
         for (ScriptResolver scriptResolver : PipeLine.getInstance().getScriptResolvers()) {
             if (!scriptResolver.getId().contains("-metadata")) {
                 resolvers.add(scriptResolver);
             }
         }
+        resolvers.add(PipeLine.getInstance().getResolver(TomahawkApp.PLUGINNAME_USERCOLLECTION));
+        resolvers.add(new HatchetStubResolver(HatchetAuthenticatorUtils.HATCHET_PRETTY_NAME, null));
         segment = new Segment(resolvers, R.integer.grid_column_count,
                 R.dimen.padding_superlarge, R.dimen.padding_superlarge);
         segments.add(segment);

@@ -112,53 +112,54 @@ public class SpotifyService extends Service {
 
         @Override
         public void handleMessage(Message msg) {
-            try {
-                switch (msg.what) {
-                    case MSG_REGISTERCLIENT:
-                        mFromSpotifyMessengers.add(msg.replyTo);
-                        break;
-                    case MSG_INIT:
-                        init(LibSpotifyWrapper.class.getClassLoader(), getFilesDir() + "/Spotify");
-                        break;
-                    case MSG_DESTROY:
-                        destroy();
-                        break;
-                    case MSG_LOGIN:
-                        SpotifyLogin spotifyLogin = InfoSystemUtils.getObjectMapper()
-                                .readValue(msg.getData().getString(SpotifyService.STRING_KEY),
-                                        SpotifyLogin.class);
-                        login(spotifyLogin.username, spotifyLogin.password, spotifyLogin.blob);
-                        break;
-                    case MSG_LOGOUT:
-                        logout();
-                        break;
-                    case MSG_RESOLVE:
-                        SpotifyQuery spotifyQuery = InfoSystemUtils.getObjectMapper()
-                                .readValue(msg.getData().getString(SpotifyService.STRING_KEY),
-                                        SpotifyQuery.class);
-                        resolve(spotifyQuery.queryKey, spotifyQuery.queryString);
-                        break;
-                    case MSG_PREPARE:
-                        prepare(msg.getData().getString(SpotifyService.STRING_KEY));
-                        break;
-                    case MSG_PLAY:
-                        play();
-                        break;
-                    case MSG_PAUSE:
-                        pause();
-                        break;
-                    case MSG_SEEK:
-                        seek(msg.arg1);
-                        break;
-                    case MSG_SETBITRATE:
-                        setbitrate(msg.arg1);
-                        break;
-                    default:
-                        super.handleMessage(msg);
-                }
-            } catch (IOException e) {
-                Log.e(TAG, "handleMessage: " + e.getClass() + ": " + e.getLocalizedMessage());
-            }
+//            try {
+//                switch (msg.what) {
+//                    case MSG_REGISTERCLIENT:
+//                        mFromSpotifyMessengers.add(msg.replyTo);
+//                        break;
+//                    case MSG_INIT:
+//                        init(LibSpotifyWrapper.class.getClassLoader(), getFilesDir() + "/Spotify");
+//                        break;
+//                    case MSG_DESTROY:
+//                        destroy();
+//                        break;
+//                    case MSG_LOGIN:
+//                        SpotifyLogin spotifyLogin = InfoSystemUtils.getObjectMapper()
+//                                .readValue(msg.getData().getString(SpotifyService.STRING_KEY),
+//                                        SpotifyLogin.class);
+//                        login(spotifyLogin.username, spotifyLogin.password, spotifyLogin.blob);
+//                        break;
+//                    case MSG_LOGOUT:
+//                        logout();
+//                        break;
+//                    case MSG_RESOLVE:
+//                        SpotifyQuery spotifyQuery = InfoSystemUtils.getObjectMapper()
+//                                .readValue(msg.getData().getString(SpotifyService.STRING_KEY),
+//                                        SpotifyQuery.class);
+//                        resolve(spotifyQuery.queryKey, spotifyQuery.queryString);
+//                        break;
+//                    case MSG_PREPARE:
+//                        prepare(msg.getData().getString(SpotifyService.STRING_KEY));
+//                        break;
+//                    case MSG_PLAY:
+//                        play();
+//                        break;
+//                    case MSG_PAUSE:
+//                        pause();
+//                        break;
+//                    case MSG_SEEK:
+//                        seek(msg.arg1);
+//                        break;
+//                    case MSG_SETBITRATE:
+//                        setbitrate(msg.arg1);
+//                        break;
+//                    default:
+//                        super.handleMessage(msg);
+//                }
+//            }
+//            catch (IOException e) {
+//                Log.e(TAG, "handleMessage: " + e.getClass() + ": " + e.getLocalizedMessage());
+//            }
         }
     }
 
@@ -191,15 +192,15 @@ public class SpotifyService extends Service {
         super.onCreate();
 
         // Load the LibSpotifyWrapper libaries
-        System.loadLibrary("spotify");
-        System.loadLibrary("spotifywrapper");
+       // System.loadLibrary("spotify");
+       // System.loadLibrary("spotifywrapper");
 
-        LibSpotifyWrapper.setSpotifyService(this);
-
-        mWifiLock = ((WifiManager) getSystemService(Context.WIFI_SERVICE))
-                .createWifiLock(WifiManager.WIFI_MODE_FULL, "mylock");
-        mWifiLock.acquire();
-        Log.d(TAG, "SpotifyService has been created");
+//        LibSpotifyWrapper.setSpotifyService(this);
+//
+//        mWifiLock = ((WifiManager) getSystemService(Context.WIFI_SERVICE))
+//                .createWifiLock(WifiManager.WIFI_MODE_FULL, "mylock");
+//        mWifiLock.acquire();
+//        Log.d(TAG, "SpotifyService has been created");
     }
 
     @Override
@@ -256,7 +257,7 @@ public class SpotifyService extends Service {
      * @param storagePath {@link String} containing the path to where libspotify stores its stuff
      */
     public void init(ClassLoader loader, String storagePath) {
-        LibSpotifyWrapper.nativeinit(loader, storagePath);
+//        LibSpotifyWrapper.nativeinit(loader, storagePath);
     }
 
     /**

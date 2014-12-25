@@ -31,7 +31,7 @@
     <View android:id="@+id/darkening_background"
           android:layout_width="match_parent"
           android:layout_height="match_parent"
-          android:background="@color/navdrawer_background"/>
+          android:background="@color/charcoal_grey"/>
 
     <LinearLayout android:id="@+id/content"
                   android:layout_width="match_parent"
@@ -43,7 +43,7 @@
                      android:layout_height="@dimen/playback_panel_height"
                      android:paddingLeft="@dimen/padding_superlarge"
                      android:paddingRight="@dimen/padding_superlarge"
-                     android:background="@color/navdrawer_background">
+                     android:background="@color/charcoal_grey">
 
             <ImageButton
                     android:id="@+id/imageButton_repeat"
@@ -278,7 +278,7 @@
 
         <FrameLayout android:layout_width="match_parent"
                      android:layout_height="@dimen/playback_clear_space_bottom"
-                     android:background="@color/navdrawer_background">
+                     android:background="@color/charcoal_grey">
 
             <FrameLayout android:layout_width="match_parent"
                          android:layout_height="@dimen/playback_panel_height"

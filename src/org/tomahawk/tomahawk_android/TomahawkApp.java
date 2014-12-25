@@ -58,11 +58,11 @@ public class TomahawkApp extends MultiDexApplication {
 
     public final static String PLUGINNAME_JAMENDO = "jamendo";
 
-    public final static String PLUGINNAME_OFFICIALFM = "officialfm";
+    //public final static String PLUGINNAME_OFFICIALFM = "officialfm";
 
     public final static String PLUGINNAME_SOUNDCLOUD = "soundcloud";
 
-    public final static String PLUGINNAME_QURANMP3 = "quranmp3";
+    public final static String PLUGINNAME_OFFICIALFM = "quranmp3";
 
     private static Context sApplicationContext;
 
