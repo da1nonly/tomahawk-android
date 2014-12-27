@@ -768,6 +768,7 @@
                   android:launchMode="singleInstance"
                   android:excludeFromRecents="true"
                   android:finishOnTaskLaunch="false"/>
+        <meta-data android:name="com.crashlytics.ApiKey" android:value="f40cd0a308eadf8f84bc52de54f0aa22da3340c5"/>
     </application>
 
 </manifest>

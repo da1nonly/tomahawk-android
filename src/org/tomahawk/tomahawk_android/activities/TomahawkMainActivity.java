@@ -18,6 +18,7 @@
  */
 package org.tomahawk.tomahawk_android.activities;
 
+import com.crashlytics.android.Crashlytics;
 import com.rdio.android.api.OAuth1WebViewActivity;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.uservoice.uservoicesdk.Config;
@@ -404,6 +405,7 @@ public class TomahawkMainActivity extends ActionBarActivity
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Crashlytics.start(this);
 
         UserCollection userCollection = (UserCollection) CollectionManager.getInstance()
                 .getCollection(TomahawkApp.PLUGINNAME_USERCOLLECTION);

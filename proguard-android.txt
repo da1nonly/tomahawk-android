@@ -206,3 +206,5 @@
 ##################
 -keep class com.deezer.** { *; }
 
+
+-keepattributes SourceFile,LineNumberTable

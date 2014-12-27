@@ -102,3 +102,5 @@ bin-release/
 
 ###Signing###
 signingconfig.gradle
+crashlytics.properties
+signature.jks
