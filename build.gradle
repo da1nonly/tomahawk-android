@@ -1,13 +1,16 @@
 buildscript {
     repositories {
         mavenCentral()
+        maven { url 'http://download.crashlytics.com/maven' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:1.0.0'
+        classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.+'
     }
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'crashlytics'
 
 repositories {
     mavenCentral()
@@ -15,6 +18,7 @@ repositories {
     flatDir {
         dirs 'libs'
     }
+    maven { url 'http://download.crashlytics.com/maven' }
 }
 
 dependencies {
@@ -45,12 +49,13 @@ dependencies {
     compile "com.squareup.retrofit:retrofit:1.8.0"
     compile 'com.sothree.slidinguppanel:library:2.0.3'
     compile "com.nineoldandroids:library:2.4.0"
-    compile('com.uservoice:uservoice-android-sdk:1.1.2') {
+    compile('com.uservoice:uservoice-android-sdk:1.2.2') {
         transitive = false
     }
     compile 'de.greenrobot:eventbus:2.4.0'
     compile "com.daimajia.swipelayout:library:1.1.8@aar"
     compile 'com.spotify.sdk:spotifysdk:1.0.0-beta8@aar'
+    compile 'com.crashlytics.android:crashlytics:1.+'
 }
 
 /*
@@ -69,6 +74,7 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 21
+        applicationId "org.deen_ul_islam.quran_mp3"
         renderscriptTargetApi 21
         renderscriptSupportModeEnabled true
         versionName '0.79'
@@ -136,11 +142,13 @@ android {
         debug {
             versionNameSuffix "_debug"
             zipAlignEnabled true
+            applicationIdSuffix "debug"
         }
     }
 
     productFlavors {
         arm {
+            applicationId "org.deen_ul_islam.quran_mp3"
             versionName getNewVersionName() + "_arm"
             versionCode Integer.parseInt("1" + defaultConfig.versionCode)
             ndk {

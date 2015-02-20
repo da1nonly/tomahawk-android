@@ -18,6 +18,7 @@
  */
 package org.tomahawk.tomahawk_android.activities;
 
+import com.crashlytics.android.Crashlytics;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.animation.ValueAnimator;
@@ -416,6 +417,7 @@ public class TomahawkMainActivity extends ActionBarActivity
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Crashlytics.start(this);
 
         UserCollection userCollection = (UserCollection) CollectionManager.getInstance()
                 .getCollection(TomahawkApp.PLUGINNAME_USERCOLLECTION);
