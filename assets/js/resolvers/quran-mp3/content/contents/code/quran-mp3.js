@@ -62,13 +62,12 @@ var QuranMp3Resolver = Tomahawk.extend(TomahawkResolver, {
             album: item.album,
             albumpos: item.track_number,
             track: item.title,
-            //size: (item.size || 0),
-            //duration: (item.duration || 0),
-            //bitrate: 0,
-            source: "quran-mp3",
+            size: (item.size || 0),
+            duration: (item.duration || 0),
+            bitrate: 0,
+            source: "QuranMp3",
             url: item.url,
             extension: "mp3",
-            mimetype: "audio/mpeg";
             score: 1.00
         };
         return result;
